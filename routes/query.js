@@ -3,7 +3,7 @@ const { indexes } = require("../lunr")
 
 const router = express.Router()
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
     const result = indexes[req.body.modelName].search(req.body.search, {
         fields: req.body.fields || {}
     })
@@ -12,7 +12,13 @@ router.post("/", (req, res) => {
         res.json({ message: "No results found!" })
         return
     }
-    res.json({ result: indexes[req.body.modelName].documentStore.getDoc(result[0].ref) })
+    const results = {}
+    await Promise.all(result.map((r, i) => {
+        results[i] = indexes[req.body.modelName].documentStore.getDoc(result[i].ref)
+        results[i].score = result[i].score
+        return true
+    }))
+    res.json({ results })
 })
 
 module.exports.router = router
