@@ -17,7 +17,7 @@ server.listen(process.env.PORT || 8080, async () => {
     // Saving interval
     if (process.env.SAVE_TO_DISK === "true") {
         // read from disk, load in
-        if (fs.readdirSync(path.join(__dirname, "saves"))) {
+        if (fs.existsSync(path.join(__dirname, "saves"))) {
             console.log("Reading saved indexes from disk...")
             const files = fs.readdirSync(path.join(__dirname, "saves"))
             if (files.length < 1) {
@@ -35,7 +35,7 @@ server.listen(process.env.PORT || 8080, async () => {
         // set interval to write to disk
         setInterval(() => {
             console.log("Writing out indexes...")
-            if (!fs.readdirSync(path.join(__dirname, "saves"))) {
+            if (!fs.existsSync(path.join(__dirname, "saves"))) {
                 fs.mkdirSync(path.join(__dirname, "saves"))
             }
             Promise.all(Object.keys(indexes).map((index) => {
