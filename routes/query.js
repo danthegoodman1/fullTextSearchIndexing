@@ -7,7 +7,6 @@ router.post("/", async (req, res) => { // NOTE: add pagination/limit?
     const result = indexes[req.body.modelName].search(req.body.search, {
         fields: req.body.fields || undefined
     })
-    console.log(result)
     if (result.length < 1) {
         res.json({ message: "No results found!" })
         return

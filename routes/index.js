@@ -1,7 +1,17 @@
 const express = require("express")
+const fs = require("fs")
+const path = require("path")
 const { indexes } = require("../lunr")
 
 const router = express.Router()
+
+const writeModel = (model) => {
+    console.log(`Writing ${model} to disk`)
+    if (!fs.existsSync(path.join(__dirname, "..", "saves"))) {
+        fs.mkdirSync(path.join(__dirname, "..", "saves"))
+    }
+    fs.writeFileSync(path.join(__dirname, "..", "saves", model), JSON.stringify(indexes[model]))
+}
 
 router.post("/add", async (req, res) => { // TODO: Add indexing for id
     // Check for extra fields
@@ -20,7 +30,7 @@ router.post("/add", async (req, res) => { // TODO: Add indexing for id
     // Check for missing fields
     const list2F = []
     const list2 = await Promise.all(indexes[req.body.modelName]._fields.map((key) => {
-        if (Object.keys(req.body.doc).indexOf(key) < 0) {
+        if (Object.keys(req.body.doc).indexOf(key) < 0 && key !== "id") {
             list2F.push(key)
             return false
         }
@@ -31,7 +41,9 @@ router.post("/add", async (req, res) => { // TODO: Add indexing for id
         return
     }
     // We all good
+    req.body.doc.id = indexes[req.body.modelName].documentStore.length + 1
     indexes[req.body.modelName].addDoc(req.body.doc)
+    writeModel(req.body.modelName)
     res.json({ message: "Index added" })
 })
 
