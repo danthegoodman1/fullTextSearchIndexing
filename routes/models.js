@@ -2,7 +2,7 @@ const express = require("express")
 const elasticlunr = require("elasticlunr")
 const fs = require("fs")
 const path = require("path")
-const { indexes } = require("../lunr")
+const { indexes } = require("../utils")
 
 
 const router = express.Router()

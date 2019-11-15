@@ -6,7 +6,7 @@ const { app, server, io } = require("./http")
 const model = require("./routes/models")
 const querying = require("./routes/query")
 const indexing = require("./routes/index")
-const { indexes } = require("./lunr")
+const { indexes } = require("./utils")
 
 app.use(bodyParser.json())
 app.use("/models", model.router)

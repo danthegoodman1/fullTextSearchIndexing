@@ -1,5 +1,5 @@
 const express = require("express")
-const { indexes } = require("../lunr")
+const { indexes } = require("../utils")
 
 const router = express.Router()
 
