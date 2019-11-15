@@ -1,9 +1,13 @@
 const express = require("express")
-const { indexes } = require("../utils")
+const { indexes, adminkey, clientkey } = require("../utils")
 
 const router = express.Router()
 
 router.post("/", async (req, res) => { // NOTE: add pagination/limit?
+    // Auth
+    if ((req.body.adminkey && req.body.adminkey !== adminkey) || (req.body.clientkey && req.body.clientkey !== clientkey)) {
+        res.status(401).json({ message: "Unauthorized" })
+    }
     const result = indexes[req.body.modelName].search(req.body.search, {
         fields: req.body.fields || undefined
     })

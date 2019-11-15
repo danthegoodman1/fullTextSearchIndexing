@@ -1,7 +1,7 @@
 const express = require("express")
 const fs = require("fs")
 const path = require("path")
-const { indexes } = require("../utils")
+const { indexes, adminkey } = require("../utils")
 
 const router = express.Router()
 
@@ -14,6 +14,11 @@ const writeModel = (model) => {
 }
 
 router.post("/add", async (req, res) => { // TODO: Add indexing for id
+    // Auth
+    if (req.body.adminkey !== adminkey) {
+        res.status(401).json({ message: "Unauthorized" })
+        return
+    }
     // Check for extra fields
     const listF = []
     const list = await Promise.all(Object.keys(req.body.doc).map((key) => {

@@ -1,4 +1,4 @@
 node_modules
-privkey
-pubkey
+adminkey
+clientkey
 saves/**
