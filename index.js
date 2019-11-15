@@ -11,9 +11,6 @@ let index // fill in server.listen
 app.use("/models", model.router)
 app.use("/q", querying.router)
 app.use("/index", indexing.router)
-// TODO: Query
-// TODO: Remove index
-// TODO: Add index
 
 server.listen(process.env.PORT || 8080, () => {
     // Saving interval
