@@ -3,16 +3,16 @@ const { indexes } = require("../lunr")
 
 const router = express.Router()
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res) => { // NOTE: add pagination/limit?
     const result = indexes[req.body.modelName].search(req.body.search, {
-        fields: req.body.fields || {}
+        fields: req.body.fields || undefined
     })
     console.log(result)
     if (result.length < 1) {
         res.json({ message: "No results found!" })
         return
     }
-    const results = {}
+    const results = []
     await Promise.all(result.map((r, i) => {
         results[i] = indexes[req.body.modelName].documentStore.getDoc(result[i].ref)
         results[i].score = result[i].score

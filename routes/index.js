@@ -3,7 +3,7 @@ const { indexes } = require("../lunr")
 
 const router = express.Router()
 
-router.post("/add", async (req, res) => {
+router.post("/add", async (req, res) => { // TODO: Add indexing for id
     // Check for extra fields
     const listF = []
     const list = await Promise.all(Object.keys(req.body.doc).map((key) => {
