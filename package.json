@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env SAVE_TO_DISK='true' nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -18,9 +19,15 @@
   },
   "homepage": "https://github.com/danthegoodman1/fullTextSearchIndexing#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.0.0",
+    "cross-env": "^6.0.3",
     "elasticlunr": "^0.9.5",
     "express": "^4.17.1",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
   }
 }

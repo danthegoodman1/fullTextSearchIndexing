@@ -7,5 +7,5 @@ const server = http.createServer(app)
 const io = socketio(server)
 
 module.exports = {
-    app, server, io, express
+    app, server, io
 }
