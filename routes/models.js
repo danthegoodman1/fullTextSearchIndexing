@@ -2,7 +2,7 @@ const express = require("express")
 const elasticlunr = require("elasticlunr")
 const fs = require("fs")
 const path = require("path")
-const { indexes } = require("../utils")
+const { indexes, adminkey } = require("../utils")
 
 
 const router = express.Router()
@@ -16,6 +16,16 @@ const writeModel = (model) => {
 }
 
 router.post("/addModel", (req, res) => {
+    // Auth
+    if (req.body.adminkey !== adminkey) {
+        res.status(401).json({ message: "Unauthorized" })
+        return
+    }
+    // check if model already exists
+    if (indexes[req.body.modelName]) {
+        res.status(400).json({ message: "Model already exists!" })
+        return
+    }
     indexes[req.body.modelName] = elasticlunr()
     Promise.all(req.body.fields.map((field) => {
         indexes[req.body.modelName].addField(field)
