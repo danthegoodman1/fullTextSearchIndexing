@@ -57,6 +57,13 @@ router.post("/deleteModel", (req, res) => {
         res.status(401).json({ message: "Unauthorized" })
         return
     }
+    if (!req.body.modelName) {
+        res.status(400).json({ message: "Missing modelName in JSON body" })
+        return
+    }
+    delete indexes[req.body.modelName]
+    fs.unlinkSync(path.join(__dirname, "..", "saves", req.body.modelName))
+    res.json({ message: "Deleted model and all indexes" })
 })
 
 module.exports.router = router
