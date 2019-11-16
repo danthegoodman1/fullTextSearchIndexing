@@ -32,17 +32,6 @@ server.listen(process.env.PORT || 8080, async () => {
                 console.log("Loaded all indexes")
             }
         }
-        // set interval to write to disk
-        // setInterval(() => {
-        //     console.log("Writing out indexes...")
-        //     if (!fs.existsSync(path.join(__dirname, "saves"))) {
-        //         fs.mkdirSync(path.join(__dirname, "saves"))
-        //     }
-        //     Promise.all(Object.keys(indexes).map((index) => {
-        //         console.log(index)
-        //         fs.writeFileSync(path.join(__dirname, "saves", index), JSON.stringify(indexes[index]))
-        //     }))
-        // }, 3000) // every 30 seconds
     }
 
     console.log(`Listening on port ${process.env.PORT || 8080}`)
