@@ -10,7 +10,10 @@ Made with ❤️ by Dan Goodman
       - [Model Endpoints](#model-endpoints)
       - [Index Endpoints](#index-endpoints)
   - [Client API](#client-api)
+      - [Query Endpoints](#query-endpoints)
   - [WebSocket](#websocket)
+      - [JWT Generation Endpoint](#jwt-generation-endpoint)
+      - [WebSocket Configuration](#websocket-configuration)
 
 ## What is This?
 
@@ -172,6 +175,8 @@ Example:
 
 ### Client API
 
+##### Query Endpoints
+
 **POST** `/q/`
 
 Search for an index
@@ -183,8 +188,8 @@ JSON Body:
 	modelName: String,
 	fields: { // Optional, see elasticlunr documentation
 		field: {
-			boost: 1
-        }
+			boost: Number
+                }
 	},
     clientkey: String,
     adminkey: String // Can use adminkey here also, must specify as adminkey
@@ -198,12 +203,48 @@ Example:
 	fields: {
 		name: {
 			boost: 1
-        },
+                },
         description: {
             boost: 2
-        }
+                }
 	},
 	clientkey: "92d12e68-bca4-4bd1-899f-cf81f15bcfd8"
 ```
 
 ### WebSocket
+
+Clients can also WebSocket to the server and query in real time. See `simple.html` for an example. They must first use the api to obtain a JSON web token by hitting the following endpoint
+
+##### JWT Generation Endpoint
+
+**POST** `/auth/generatejwt`
+
+JSON Body: `none`
+
+##### WebSocket Configuration
+
+**WebSocket Endpoint:** `/`
+
+**WebSocket Payload**:
+```js
+JSON.stringify({
+    search: String,
+    modelName: String,
+    fields: {
+        field: {
+            boost: Number
+        }
+    }
+})
+```
+
+**WebSocket Search Response** ("message" event.data):
+
+JSON Response:
+```js
+[
+    {response}
+]
+```
+
+The response object is the model object including a score. The array is sorted descending by score by default.
