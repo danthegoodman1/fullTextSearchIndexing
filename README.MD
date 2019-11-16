@@ -240,7 +240,7 @@ Clients can also WebSocket to the server and query in real time. See `simple.htm
 
 JSON Body: `none`
 
-You then need to use this key when connecting with the socket. These tokens are set to expire 12 hours after they are issued.
+You then need to use this key when connecting with the socket. These tokens are set to expire 12 hours after they are issued. this can be changed in the `http.js` file on line 26.
 
 ##### WebSocket Configuration
 
