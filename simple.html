@@ -1,0 +1,58 @@
+<html>
+    <body>
+        <h1>Simple Front End WS test for Full-Text Search Indexing</h1>
+        <h3>Status:</h3><h3 id="status">Not Connected</h3>
+        <p>Token:</p><p id="token"></p>
+        <h4>Search in real time:</h4>
+        <input id="input" type="text"/>
+        <h4>Results:</h4>
+        <ul id="resList">
+            <li>Nothing yet!</li>
+        </ul>
+    </body>
+    <script>
+        let token
+        let ws
+        fetch("http://localhost:8080/auth/generatejwt", {
+            method: "POST"
+        })
+        .then((res) => {
+            return res.json()
+        })
+        .then((res) => {
+            // console.log(`got jwt: ${res.token}`)
+            token = res.token
+            ws = new WebSocket(`ws://localhost:8080/?token=${token}`)
+            ws.addEventListener("open", () => {
+                console.log("Socket opened!")
+                document.getElementById("status").innerHTML = "Connected!"
+            })
+            ws.addEventListener("close", () => {
+                console.log("Socket closed!")
+                document.getElementById("status").innerHTML = "Not Connected"
+            })
+            ws.addEventListener("message", (event) => {
+                console.log(JSON.parse(event.data))
+                const list = document.getElementById("resList")
+                list.innerHTML = ""
+                for (result of JSON.parse(event.data)) {
+                    const node = document.createElement("li")
+                    const textnode = document.createTextNode(JSON.stringify(result))
+                    node.appendChild(textnode)
+                    list.appendChild(node)
+                }
+            })
+            document.getElementById("token").innerHTML = token
+            document.getElementById("input").addEventListener("input", (event) => {
+                const search = document.getElementById("input").value
+                ws.send(JSON.stringify({
+                    search,
+                    modelName: "testModel"
+                }))
+            })
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+    </script>
+</html>

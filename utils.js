@@ -29,3 +29,15 @@ if (!fs.existsSync(path.join(__dirname, "clientkey"))) {
 }
 
 module.exports.clientkey = clientkey
+
+let jwtsecret
+
+if (!fs.existsSync(path.join(__dirname, "jwtsecret"))) {
+    console.log("Generating jwt secret...")
+    jwtsecret = uid()
+    fs.writeFileSync(path.join(__dirname, "jwtsecret"), jwtsecret)
+} else {
+    jwtsecret = fs.readFileSync(path.join(__dirname, "jwtsecret"), "utf-8")
+}
+
+module.exports.jwtsecret = jwtsecret

@@ -2,3 +2,4 @@ node_modules
 adminkey
 clientkey
 saves/**
+jwtsecret
