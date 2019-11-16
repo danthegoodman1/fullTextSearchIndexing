@@ -46,7 +46,12 @@
                 const search = document.getElementById("input").value
                 ws.send(JSON.stringify({
                     search,
-                    modelName: "testModel"
+                    modelName: "testModel",
+                    fields: {
+                        description: {
+                            boost: 2
+                        }
+                    }
                 }))
             })
         })

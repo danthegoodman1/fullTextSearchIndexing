@@ -32,7 +32,9 @@ ws.on("connection", (socket, req) => {
     socket.on("message", async (msg) => {
         const query = JSON.parse(msg)
         if (indexes[query.modelName]) {
-            const result = indexes[query.modelName].search(query.search)
+            const result = indexes[query.modelName].search(query.search, {
+                fields: query.fields || undefined
+            })
             const results = []
             await Promise.all(result.map((r, i) => {
                 results[i] = indexes[query.modelName].documentStore.getDoc(result[i].ref)
