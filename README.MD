@@ -36,6 +36,8 @@ This server runs both a REST API that you can use to add/list/remove indexes and
 
 ## Usage
 
+On first startup, a `clientkey`, `adminkey`, and `jwtkecret` file will be generated. In these files is where you can find the appropriate key to make the appropriate request/connection. These keys can be reset simply by deleting the files and restarting the server. Furthermore, models (and their indexes) are saved on any creation/deletion event, and are stored in a `saves` folder with the name of the file being the model name. These can be deleted manually by deleting the file and restarting the server. On every server startup they will be read from and loaded in.
+
 ### Admin API
 
 ##### Model Endpoints
@@ -222,9 +224,11 @@ Clients can also WebSocket to the server and query in real time. See `simple.htm
 
 ##### JWT Generation Endpoint
 
-**POST** `/auth/generatejwt`
+**POST** `/auth/generatejwt?token=JWTSECRET` JWTSECRET = jwtsecret file contents
 
 JSON Body: `none`
+
+You then need to use this key when connecting with the socket.
 
 ##### WebSocket Configuration
 
