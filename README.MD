@@ -236,7 +236,7 @@ Clients can also WebSocket to the server and query in real time. See `simple.htm
 
 ##### JWT Generation Endpoint
 
-**POST** `/auth/generatejwt?token=JWTSECRET` JWTSECRET = jwtsecret file contents
+**POST** `/auth/generatejwt`
 
 JSON Body: `none`
 
@@ -244,7 +244,7 @@ You then need to use this key when connecting with the socket. These tokens are 
 
 ##### WebSocket Configuration
 
-**WebSocket Endpoint:** `/`
+**WebSocket Endpoint:** `/?token=JWTSECRET` JWTSECRET = jwtsecret file contents
 
 **WebSocket Payload**:
 ```js
