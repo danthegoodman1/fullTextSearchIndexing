@@ -5,6 +5,7 @@ Made with ❤️ by Dan Goodman
 
 - [What is This?](#what-is-this)
 - [Installation](#installation)
+- [To-Do:](#to-do)
 - [Usage](#usage)
   - [Admin API](#admin-api)
       - [Model Endpoints](#model-endpoints)
@@ -29,13 +30,17 @@ This server runs both a REST API that you can use to add/list/remove indexes and
 2. Install dependencies: `npm install`
 3. Run with your preferred method (I like pm2): `node index.js`
 
+## To-Do:
+
+- Add pagination/limit to query endpoint and websocket (or hard code a certain amount of responses)
+
 ## Usage
 
 ### Admin API
 
 ##### Model Endpoints
 
-**POST** `/models/addModel/`
+**POST** `/models/addModel`
 
 Add a model
 
@@ -243,7 +248,7 @@ JSON.stringify({
 JSON Response:
 ```js
 [
-    {response}
+    {response} // Array of response objects
 ]
 ```
 
