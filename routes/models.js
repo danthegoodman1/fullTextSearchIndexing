@@ -42,12 +42,21 @@ router.post("/addModel", (req, res) => {
     })
 })
 
-router.get("/list", (req, res) => {
-
+router.post("/list", (req, res) => {
+    // Auth
+    if (req.body.adminkey !== adminkey) {
+        res.status(401).json({ message: "Unauthorized" })
+        return
+    }
+    res.json({ models: Object.keys(indexes) })
 })
 
 router.post("/deleteModel", (req, res) => {
-
+    // Auth
+    if (req.body.adminkey !== adminkey) {
+        res.status(401).json({ message: "Unauthorized" })
+        return
+    }
 })
 
 module.exports.router = router

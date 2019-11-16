@@ -46,18 +46,47 @@ router.post("/add", async (req, res) => { // TODO: Add indexing for id
         return
     }
     // We all good
-    req.body.doc.id = indexes[req.body.modelName].documentStore.length + 1
+    const theID = (+new Date).toString(36)
+    req.body.doc.id = theID
     indexes[req.body.modelName].addDoc(req.body.doc)
     writeModel(req.body.modelName)
-    res.json({ message: "Index added" })
+    res.json({ message: "Index added", id: theID })
 })
 
 router.post("/delete", (req, res) => {
-
+    // Auth
+    if (req.body.adminkey !== adminkey) {
+        res.status(401).json({ message: "Unauthorized" })
+        return
+    }
+    if (!req.body.modelName) {
+        res.status(400).json({ message: "Missing modelName in JSON body" })
+        return
+    }
+    if (!req.body.id) {
+        res.status(400).json({ message: "Missing id in JSON body" })
+        return
+    }
+    if (indexes[req.body.modelName].documentStore.docs[req.body.id]) {
+        indexes[req.body.modelName].removeDocByRef(req.body.id)
+        writeModel(req.body.modelName)
+        res.json({ message: "Deleted index" })
+    } else {
+        res.status(400).json({ message: "Index with that id doesn't exist!" })
+    }
 })
 
-router.get("/list", (req, res) => { // do we need this? coudly querying for everything just give this?
-
+router.post("/list", (req, res) => { // do we need this? coudly querying for everything just give this?
+    // Auth
+    if (req.body.adminkey !== adminkey) {
+        res.status(401).json({ message: "Unauthorized" })
+        return
+    }
+    if (!req.body.modelName) {
+        res.status(400).json({ message: "Missing modelName in JSON body" })
+        return
+    }
+    res.json({ indexes: indexes[req.body.modelName].documentStore.docs })
 })
 
 module.exports.router = router
