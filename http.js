@@ -4,10 +4,12 @@ const WebSocket = require("ws")
 const jwt = require("jsonwebtoken")
 const cors = require("cors")
 const querystring = require("querystring")
+const bodyParser = require("body-parser")
 const { jwtsecret, clientkey } = require("./utils")
 
 const app = express()
 app.use(cors())
+app.use(bodyParser.json())
 const server = http.createServer(app)
 // http://iostreamer.me/ws/node.js/jwt/2016/05/08/websockets_authentication.html
 const ws = new WebSocket.Server({

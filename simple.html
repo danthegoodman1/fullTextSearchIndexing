@@ -14,7 +14,13 @@
         let token
         let ws
         fetch("http://localhost:8080/auth/generatejwt", {
-            method: "POST"
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                clientkey: "92d12e68-bca4-4bd1-899f-cf81f15bcfd8"
+            })
         })
         .then((res) => {
             return res.json()
