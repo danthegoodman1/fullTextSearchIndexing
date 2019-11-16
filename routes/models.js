@@ -26,6 +26,9 @@ router.post("/addModel", (req, res) => {
         res.status(400).json({ message: "Model already exists!" })
         return
     }
+    if (req.body.fields.indexOf("id") < 0) {
+        req.body.fields.push("id")
+    }
     indexes[req.body.modelName] = elasticlunr()
     Promise.all(req.body.fields.map((field) => {
         indexes[req.body.modelName].addField(field)
