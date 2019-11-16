@@ -238,13 +238,25 @@ Clients can also WebSocket to the server and query in real time. See `simple.htm
 
 **POST** `/auth/generatejwt`
 
-JSON Body: `none`
+JSON Body:
+```js
+{
+    clientkey: String
+}
+```
+
+JSON Reponse:
+```js
+{
+    token: String
+}
+```
 
 You then need to use this key when connecting with the socket. These tokens are set to expire 12 hours after they are issued. this can be changed in the `http.js` file.
 
 ##### WebSocket Configuration
 
-**WebSocket Endpoint:** `/?token=JWTSECRET` JWTSECRET = jwtsecret file contents
+**WebSocket Endpoint:** `/?token=JWT` JWT = response of the `/auth/generatejwt` endpoint
 
 **WebSocket Payload**:
 ```js

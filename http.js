@@ -4,7 +4,7 @@ const WebSocket = require("ws")
 const jwt = require("jsonwebtoken")
 const cors = require("cors")
 const querystring = require("querystring")
-const { jwtsecret } = require("./utils")
+const { jwtsecret, clientkey } = require("./utils")
 
 const app = express()
 app.use(cors())
@@ -24,6 +24,10 @@ server.on("upgrade", (req, socket, head) => {
 })
 
 app.post("/auth/generatejwt", (req, res) => {
+    if (req.body.clientkey !== clientkey) {
+        res.status(403).json({ message: "Unauthorized" })
+        return
+    }
     const token = jwt.sign({ user: "client" }, jwtsecret, { expiresIn: "12h" }) // token expire every 12 hours
     res.json({ token })
 })
