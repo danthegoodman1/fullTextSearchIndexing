@@ -10,7 +10,6 @@ Made with ❤️ by Dan Goodman
       - [Model Endpoints](#model-endpoints)
       - [Index Endpoints](#index-endpoints)
   - [Client API](#client-api)
-      - [Query Endpoints](#query-endpoints)
   - [WebSocket](#websocket)
 
 ## What is This?
@@ -34,6 +33,9 @@ This server runs both a REST API that you can use to add/list/remove indexes and
 ##### Model Endpoints
 
 **POST** `/models/addModel/`
+
+Add a model
+
 JSON Body:
 ```js
 {
@@ -48,20 +50,160 @@ JSON Body:
 Example:
 ```js
 {
-	"modelName": "testModel",
-	"fields": [
+	modelName: "testModel",
+	fields: [
 		"name",
 		"description"
 	],
-	"adminkey": "55d438cb-16fc-4726-8ecc-219f3ff6607c"
+	adminkey: "55d438cb-16fc-4726-8ecc-219f3ff6607c"
 }
 ```
-**NOTE:** Never define
+**NOTE:** the field `id` is what is used as a reference to a index document. It will be defined in the backend regardless of whether you define it in the request.
+
+**POST** `/models/list`
+
+List models
+
+JSON Body:
+```js
+{
+    adminkey: String
+}
+```
+
+Example:
+
+```js
+{
+    adminkey: "55d438cb-16fc-4726-8ecc-219f3ff6607c"
+}
+```
+
+**POST** `/models/deleteModel`
+
+Deletes a model and all of its documents
+
+JSON Body:
+```js
+{
+    modelName: String,
+    adminkey: String
+}
+```
+
+Example:
+```js
+{
+    modelName: "testModel",
+    adminkey: "55d438cb-16fc-4726-8ecc-219f3ff6607c"
+}
+```
 
 ##### Index Endpoints
 
+**POST** `/index/add`
+
+Adds an index to a model
+
+JSON Body:
+```js
+{
+    doc: {
+        field: String
+    },
+    modelName: String,
+    adminkey: String
+}
+```
+
+Example:
+```js
+{
+	doc: {
+		name: "Dan Goodman",
+		description: "Dan Goodman is the developer of this sweet software"
+	},
+	modelName: "testModel",
+	adminkey: "55d438cb-16fc-4726-8ecc-219f3ff6607c"
+}
+```
+
+**POST** `/index/list`
+
+List all indexes in a model
+
+JSON Body:
+```js
+{
+    modelName: String,
+    adminkey: String
+}
+```
+
+Example:
+```js
+{
+    modelName: "testModel",
+	adminkey: "55d438cb-16fc-4726-8ecc-219f3ff6607c"
+}
+```
+
+**POST** `/index/delete`
+
+Deletes an index
+
+JSON Body:
+```js
+{
+    modelName: String,
+    id: String,
+    adminkey: String
+}
+```
+
+Example:
+```js
+{
+    modelName: "testModel",
+    id: "k31s3uev"
+	adminkey: "55d438cb-16fc-4726-8ecc-219f3ff6607c"
+}
+```
+
 ### Client API
 
-##### Query Endpoints
+**POST** `/q/`
+
+Search for an index
+
+JSON Body:
+```js
+{
+    search: String,
+	modelName: String,
+	fields: { // Optional, see elasticlunr documentation
+		field: {
+			boost: 1
+        }
+	},
+    clientkey: String,
+    adminkey: String // Can use adminkey here also, must specify as adminkey
+}
+```
+
+Example:
+```js
+    search: "Dan Goodman",
+	modelName: "testModel",
+	fields: {
+		name: {
+			boost: 1
+        },
+        description: {
+            boost: 2
+        }
+	},
+	clientkey: "92d12e68-bca4-4bd1-899f-cf81f15bcfd8"
+```
 
 ### WebSocket
