@@ -13,13 +13,13 @@
     <script>
         let token
         let ws
-        fetch("http://localhost:8080/auth/generatejwt", {
+        fetch("http://209.97.146.114:8080/auth/generatejwt", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                clientkey: "92d12e68-bca4-4bd1-899f-cf81f15bcfd8"
+                clientkey: "0be53ccd-2719-4a38-95b0-94aba1ac762d"
             })
         })
         .then((res) => {
@@ -27,7 +27,7 @@
         })
         .then((res) => {
             token = res.token
-            ws = new WebSocket(`ws://localhost:8080/?token=${token}`)
+            ws = new WebSocket(`ws://209.97.146.114:8080/?token=${token}`)
             ws.addEventListener("open", () => {
                 console.log("Socket opened!")
                 document.getElementById("status").innerHTML = "Connected!"
@@ -52,9 +52,9 @@
                 const search = document.getElementById("input").value
                 ws.send(JSON.stringify({
                     search,
-                    modelName: "testModel",
+                    modelName: "person",
                     fields: {
-                        description: {
+                        name: {
                             boost: 2
                         }
                     }
