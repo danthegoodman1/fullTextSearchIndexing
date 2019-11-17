@@ -23,7 +23,7 @@ Full-Text search indexing is an extremely powerful tool that fuels the quick sea
 
 This is both a project for myself to learn more about full-text search indexing, as well as an Open-Source offering to the world to host your own full-text search indexing server instead of using the free tier of Algolia, built in indexing with Mongodb Atlas, or anything else (if you prefer to host everything yourself).
 
-This server runs both a REST API that you can use to add/list/remove indexes and models, query from, and a WebSocket server that you can have clients socket to for real-time search results (try running the simple.html after you have setup a model and some indexes to see what I mean. It saves everything to disk as it is updated, and loads them into memory on start.
+This server runs both a REST API that you can use to add/list/remove indexes and models, query from, and a WebSocket server that you can have clients socket to for real-time search results (try running the simple.html after you have setup a model and some indexes to see what I mean). It saves everything to disk as it is updated, and loads them into memory on start.
 
 #### Features
 
