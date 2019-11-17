@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env SAVE_TO_DISK='true' nodemon index.js"
+    "dev": "cross-env SAVE_TO_DISK='true' nodemon index.js",
+    "start": "cross-env SAVE_TO_DISK='true' node index.js"
   },
   "repository": {
     "type": "git",
