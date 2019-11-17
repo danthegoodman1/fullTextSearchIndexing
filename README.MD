@@ -40,7 +40,7 @@ This server runs both a REST API that you can use to add/list/remove indexes and
 
 1. Clone this repository: `git clone https://github.com/danthegoodman1/fullTextSearchIndexing.git`
 2. Install dependencies: `npm install`
-3. Run with your preferred method (I like pm2): `node index.js`
+3. Run with your preferred method (I like pm2): `npm start`
 
 ## To-Do:
 
