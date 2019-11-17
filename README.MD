@@ -50,7 +50,7 @@ This server runs both a REST API that you can use to add/list/remove indexes and
 
 On first startup, a `clientkey`, `adminkey`, and `jwtsecret` file will be generated. In these files is where you can find the appropriate key to make the appropriate request/connection. These keys can be reset simply by deleting the files and restarting the server. Furthermore, models (and their indexes) are saved on any creation/deletion event, and are stored in a `saves` folder with the name of the file being the model name. These can be deleted manually by deleting the file and restarting the server. On every server startup they will be read from and loaded in.
 
-Here is a WebSocket speed example with 34116 indexes:
+Here is a WebSocket speed example with 46152 indexes:
 ![example](/assets/example.gif)
 
 ### Admin API
