@@ -160,6 +160,8 @@ Example:
 
 List all indexes in a model
 
+**WARNING** This will send you everything and a single request. This endpoint should be used for early development purposes only, thus why it is restricted to the admin key.
+
 JSON Body:
 ```js
 {
