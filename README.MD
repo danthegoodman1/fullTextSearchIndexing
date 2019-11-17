@@ -52,7 +52,7 @@ On first startup, a `clientkey`, `adminkey`, and `jwtsecret` file will be genera
 
 Here is a WebSocket speed example with **46152 indexes**:
 
-(Running on a DigitalOcean 2vCPU, 4GB Standard Droplet)
+*(Running on a DigitalOcean 2vCPU, 4GB Standard Droplet)*
 
 ![example](/assets/example.gif)
 
