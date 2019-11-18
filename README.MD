@@ -45,6 +45,7 @@ This server runs both a REST API that you can use to add/list/remove indexes and
 ## To-Do:
 
 - Add pagination/limit to query endpoint and websocket (or hard code a certain amount of responses)
+- Add local clustering for multi-threaded performance
 
 ## Usage
 
