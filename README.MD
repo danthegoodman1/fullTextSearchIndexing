@@ -35,6 +35,7 @@ This server runs both a REST API that you can use to add/list/remove indexes and
 - WebSocketed real-time search
 - Client/Admin API access
 - JWT WebSocket Security
+- Expanded Search
 
 ## Installation
 
@@ -218,11 +219,14 @@ JSON Body:
 		field: {
 			boost: Number
                 }
-	},
+    },
+    expand: Boolean, // Optional
     clientkey: String,
     adminkey: String // Can use adminkey here also, must specify as adminkey
 }
 ```
+
+The `expand` field will enable a search like `buy` to also match `buyer` `buys` `buying`, etc.
 
 Example:
 ```js
@@ -272,11 +276,12 @@ You then need to use this key when connecting with the socket. These tokens are 
 JSON.stringify({
     search: String,
     modelName: String,
-    fields: {
+    fields: { // Optional
         field: {
             boost: Number
         }
-    }
+    },
+    expand: Boolean // Optional
 })
 ```
 

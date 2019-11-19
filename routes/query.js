@@ -13,7 +13,8 @@ router.post("/", async (req, res) => { // NOTE: add pagination/limit?
         res.status(400).json({ message: "Model doesn't exist!" })
     }
     const result = indexes[req.body.modelName].search(req.body.search, {
-        fields: req.body.fields || undefined
+        fields: req.body.fields || undefined,
+        expand: req.body.expand || false
     })
     if (result.length < 1) {
         res.json({ message: "No results found!" })
@@ -33,7 +34,8 @@ ws.on("connection", (socket, req) => {
         const query = JSON.parse(msg)
         if (indexes[query.modelName]) {
             const result = indexes[query.modelName].search(query.search, {
-                fields: query.fields || undefined
+                fields: query.fields || undefined,
+                expand: query.expand || false
             })
             const results = []
             await Promise.all(result.map((r, i) => {
