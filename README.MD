@@ -231,7 +231,7 @@ JSON Body:
 
 The `expand` field will enable a search like `buy` to also match `buyer` `buys` `buying`, etc.
 
-The `fuzzy` field will also query the DataMuse API for words that are similar to the search term, and perform the same index on those words in addition to the initial search. This has been restricted to the HTTP endpoint and not the WebSocket search since this is a much heavier operation. It will then resort the results according to score including the new search results
+The `fuzzy` field will also query the DataMuse API for words that are similar to the search term, and perform the same index on those words in addition to the initial search. This has been restricted to the HTTP endpoint and not the WebSocket search since this is a much heavier operation. It will then resort the results according to score including the new search results, where the **similar terms are weighted as much as the initial search**.
 
 Example:
 ```js
