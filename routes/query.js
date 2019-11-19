@@ -16,11 +16,12 @@ const likeSearch = (query) => {
         fetch(`https://api.datamuse.com/words?ml=${encodeURI(query.search)}`)
         .then((res) => res.json())
         .then(async (res) => {
-            let newQueries = []
-            let theList = res.slice(0, query.fuzzy.length)
-            for (item of theList) {
+            const newQueries = []
+            const theList = res.slice(0, query.fuzzy.length)
+            await Promise.all(theList.map((item) => {
                 newQueries.push(item.word)
-            }
+                return true
+            }))
             resolve(newQueries)
         })
         .catch((error) => {
