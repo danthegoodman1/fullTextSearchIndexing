@@ -221,12 +221,17 @@ JSON Body:
                 }
     },
     expand: Boolean, // Optional
+    fuzzy: { // Optional
+        length: Number
+    }
     clientkey: String,
     adminkey: String // Can use adminkey here also, must specify as adminkey
 }
 ```
 
 The `expand` field will enable a search like `buy` to also match `buyer` `buys` `buying`, etc.
+
+The `fuzzy` field will also query the DataMuse API for words that are similar to the search term, and perform the same index on those words in addition to the initial search. This has been restricted to the HTTP endpoint and not the WebSocket search since this is a much heavier operation. It will then resort the results according to score including the new search results, where the **similar terms are weighted as much as the initial search**.
 
 Example:
 ```js
@@ -238,7 +243,11 @@ Example:
                 },
         description: {
             boost: 2
-                }
+                },
+    expand: true,
+    fuzzy: {
+        length: 3
+    }
 	},
 	clientkey: "92d12e68-bca4-4bd1-899f-cf81f15bcfd8"
 ```
