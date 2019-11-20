@@ -36,6 +36,8 @@ This server runs both a REST API that you can use to add/list/remove indexes and
 - Client/Admin API access
 - JWT WebSocket Security
 - Expanded Search
+- Fuzzy Search
+- Typo correction
 
 ## Installation
 
@@ -47,7 +49,6 @@ This server runs both a REST API that you can use to add/list/remove indexes and
 
 - Add pagination/limit to query endpoint and websocket (or hard code a certain amount of responses)
 - Add local clustering for multi-threaded performance
-- Maybe add better typo detection/correction locally? https://github.com/cfinke/Typo.js/ Or with datamuse /words?sp=xxx, use lodash unionby or uniqby
 - Consider switching to fuse.js for built-in fuzzy search? (would require major redesign)
 
 ## Usage
@@ -225,7 +226,8 @@ JSON Body:
     expand: Boolean, // Optional
     fuzzy: { // Optional
         length: Number
-    }
+    },
+    typoStrength: Number // Optional
     clientkey: String,
     adminkey: String // Can use adminkey here also, must specify as adminkey
 }
@@ -233,9 +235,11 @@ JSON Body:
 
 The `expand` field will enable a search like `buy` to also match `buyer` `buys` `buying`, etc.
 
-The `fuzzy` field will also query the DataMuse API for words that are similar to the search term, and perform the same index on those words in addition to the initial search. This has been restricted to the HTTP endpoint and not the WebSocket search since this is a much heavier operation. It will then resort the results according to score including the new search results, where the **similar terms are weighted as much as the initial search**.
+The `typoStrength` field will attempt to detect typos, and depending on the value, will try to load more typo suggestions. This is best set at `1` or `2` tops.
 
-**NOTE:** Due to the restrictions of the DataMuse API, you are restricted to 250,000 fuzzy queries per 24 hours.
+The `fuzzy` field will also query the DataMuse API for words that are similar to the search term, and perform the same index on those words in addition to the initial search. This has been restricted to the HTTP endpoint and not the WebSocket search since this is a much heavier operation. It will then resort the results according to score including the new search results, where the **similar terms are weighted as much as the initial search**. Fuzzy search will also be performed on each of the typo suggestions.
+
+**NOTE:** Due to the restrictions of the DataMuse API, you are restricted to 100,000 fuzzy queries per 24 hours.
 
 Example:
 ```js
@@ -251,7 +255,8 @@ Example:
     expand: true,
     fuzzy: {
         length: 3
-    }
+    },
+    typoStrength: 1
 	},
 	clientkey: "92d12e68-bca4-4bd1-899f-cf81f15bcfd8"
 ```
