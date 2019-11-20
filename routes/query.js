@@ -89,7 +89,6 @@ router.post("/", async (req, res) => { // NOTE: add pagination/limit?
     }
     if (req.body.fuzzy && req.body.fuzzy.length) { // DataMuse API
         await Promise.all(searches.map(async (aSearch) => {
-            console.log(`performing fuzzy on ${aSearch}`)
             await likeSearch(aSearch, req.body.fuzzy.length)
             .then(async (newSearches) => {
                 await Promise.all(newSearches.map(async (item) => {
