@@ -60,7 +60,6 @@ router.post("/", async (req, res) => { // NOTE: add pagination/limit?
         return true
     }))
     const searches = [req.body.search]
-    console.log(1)
     if (req.body.typoStrength && req.body.typoStrength > 0 && !req.body.search.includes(" ") && !dic.check(req.body.search)) { // Typo correction
         await typoSearch(req.body)
         .then(async (newSearches) => {
@@ -86,11 +85,8 @@ router.post("/", async (req, res) => { // NOTE: add pagination/limit?
             console.error(e)
         })
     }
-    console.log(2)
     if (req.body.fuzzy && req.body.fuzzy.length) { // DataMuse API
-        console.log("going")
         await Promise.all(searches.map(async (aSearch) => {
-            console.log(aSearch)
             await likeSearch(aSearch, req.body.fuzzy.length)
             .then(async (newSearches) => {
                 await Promise.all(newSearches.map(async (item) => {
