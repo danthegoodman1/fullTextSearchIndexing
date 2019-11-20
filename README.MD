@@ -47,6 +47,8 @@ This server runs both a REST API that you can use to add/list/remove indexes and
 
 - Add pagination/limit to query endpoint and websocket (or hard code a certain amount of responses)
 - Add local clustering for multi-threaded performance
+- Maybe add better typo detection/correction locally? https://github.com/cfinke/Typo.js/ Or with datamuse /words?sp=xxx
+- Consider switching to fuse.js for built-in fuzzy search? (would require major redesign)
 
 ## Usage
 
