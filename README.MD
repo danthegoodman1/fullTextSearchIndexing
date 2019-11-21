@@ -50,6 +50,7 @@ This server runs both a REST API that you can use to add/list/remove indexes and
 - Add pagination/limit to query endpoint and websocket (or hard code a certain amount of responses)
 - Add local clustering for multi-threaded performance
 - Consider switching to fuse.js for built-in fuzzy search? (would require major redesign)
+- Consider making typo detection in sentences (divide sentence into an array, replace typo with proper word and reassemble to search)
 
 ## Usage
 
@@ -235,7 +236,7 @@ JSON Body:
 
 The `expand` field will enable a search like `buy` to also match `buyer` `buys` `buying`, etc.
 
-The `typoStrength` field will attempt to detect typos, and depending on the value, will try to load more typo suggestions. This is best set at `1` or `2` tops. Note that fuzzy search will also be performed on each of the typo suggestions (`typoStrength`). Typo detection will only take place if there is a typo in the search.
+The `typoStrength` field will attempt to detect typos, and depending on the value, will try to load more typo suggestions. This is best set at `1` or `2` tops. Note that fuzzy search will also be performed on each of the typo suggestions (`typoStrength`). Typo detection will only take place if there is a typo in the search. Additionally, to preserve maximum speed, typo detection currently only works with single word searches.
 
 The `fuzzy` field will also query the DataMuse API for words that are similar to the search term, and perform the same index on those words in addition to the initial search. This has been restricted to the HTTP endpoint and not the WebSocket search since this is a much heavier operation. It will then resort the results according to score including the new search results, where the **similar terms are weighted as much as the initial search**. Fuzzy search will also be performed on each of the typo suggestions, resulting in the amount of api calls being: 1 + typoStrength. This can also add in some delay since we need to wait for multiple HTTP calls to the datamuse API (they are performed in parallel/async however, but ones could take longer than another).
 
